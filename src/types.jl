@@ -8,6 +8,7 @@ abstract type GpFunction4p <: GpFunction end
 #  Unary functions
 abstract type NegateFunction <: GpFunction1p end
 abstract type ExpFunction <: GpFunction1p end
+abstract type NotFunction <: GpFunction1p end
 
 # Binary Functions
 abstract type PlusFunction <: GpFunction2p end

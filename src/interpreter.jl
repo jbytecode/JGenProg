@@ -66,3 +66,8 @@ function eval!(::Type{OrFunction}, stack)
     p2::Bool = !iszero(pop!(stack))
     push!(stack, p2 || p1)
 end
+
+function eval!(::Type{NotFunction}, stack)
+    p::Bool = !iszero(pop!(stack))
+    push!(stack, !p)
+end

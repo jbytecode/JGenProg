@@ -134,3 +134,22 @@ end
     value = pop!(stack)
     @test value == 1
 end
+
+@testset "Not function" begin
+    codelist = [1, NotFunction]
+    stack = createstack()
+    dict = Dict()
+    interprete(codelist, stack, dict)
+    value = pop!(stack)
+    @test value == 0
+
+    codelist = [0, NotFunction]
+    interprete(codelist, stack, dict)
+    value = pop!(stack)
+    @test value == 1
+
+    codelist = [5, NotFunction]
+    interprete(codelist, stack, dict)
+    value = pop!(stack)
+    @test value == 0
+end
