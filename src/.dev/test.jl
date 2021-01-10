@@ -90,3 +90,47 @@ end
     value = pop!(stack)
     @test value == 30
 end
+
+@testset "And function" begin
+    codelist = [5, 6, AndFunction]
+    stack = createstack()
+    dict = Dict()
+    interprete(codelist, stack, dict)
+    value = pop!(stack)
+    @test value == 1
+
+    codelist = [5, 0, AndFunction]
+    interprete(codelist, stack, dict)
+    value = pop!(stack)
+    @test value == 0
+
+    codelist = [0, 0, AndFunction]
+    interprete(codelist, stack, dict)
+    value = pop!(stack)
+    @test value == 0
+
+    codelist = [1, 1, AndFunction]
+    interprete(codelist, stack, dict)
+    value = pop!(stack)
+    @test value == 1
+
+end
+
+@testset "Or function" begin
+    codelist = [1, 0, OrFunction]
+    stack = createstack()
+    dict = Dict()
+    interprete(codelist, stack, dict)
+    value = pop!(stack)
+    @test value == 1
+
+    codelist = [0, 0, OrFunction]
+    interprete(codelist, stack, dict)
+    value = pop!(stack)
+    @test value == 0
+
+    codelist = [1, 1, OrFunction]
+    interprete(codelist, stack, dict)
+    value = pop!(stack)
+    @test value == 1
+end

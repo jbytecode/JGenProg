@@ -15,6 +15,8 @@ codelist = [
 
 stack = createstack()
 
-interprete(codelist, stack)
+dict = Dict(:x => 1, :y => 1)
+
+interprete(codelist, stack, dict)
 
 println(stack)

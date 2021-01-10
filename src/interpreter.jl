@@ -1,7 +1,6 @@
 function createstack()
-    return Stack{Union{Symbol,Number,GpFunction}}()
+    return Stack{Number}()
 end
-
 
 function interprete(codelist, stack, dict)
     for element in codelist
@@ -13,7 +12,7 @@ function interprete(codelist, stack, dict)
             eval!(element, stack)
         end
     end
-end
+end #  End of interprete
 
 function eval!(::Type{PlusFunction}, stack)
     p1 = pop!(stack)
@@ -56,3 +55,14 @@ function eval!(::Type{ExpFunction}, stack)
     push!(stack, exp(p))
 end
 
+function eval!(::Type{AndFunction}, stack)
+    p1::Bool = !iszero(pop!(stack)) 
+    p2::Bool = !iszero(pop!(stack))
+    push!(stack, p2 && p1)
+end
+
+function eval!(::Type{OrFunction}, stack)
+    p1::Bool = !iszero(pop!(stack)) 
+    p2::Bool = !iszero(pop!(stack))
+    push!(stack, p2 || p1)
+end
