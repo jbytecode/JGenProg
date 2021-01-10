@@ -36,3 +36,15 @@ function eval!(::Type{DivideFunction}, stack)
     p2 = pop!(stack)
     push!(stack, p2 / p1)
 end
+
+function eval!(::Type{PowerFunction}, stack)
+    p1 = pop!(stack)
+    p2 = pop!(stack)
+    push!(stack, p2^p1)
+end
+
+
+function eval!(::Type{NegateFunction}, stack)
+    p = pop!(stack)
+    push!(stack, -p)
+end
