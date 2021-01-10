@@ -1,7 +1,7 @@
 using DataStructures
 
-include("../src/types.jl")
-include("../src/interpreter.jl")
+include("../types.jl")
+include("../interpreter.jl")
 
 
 # Trying

@@ -7,6 +7,7 @@ abstract type GpFunction4p <: GpFunction end
 
 
 abstract type NegateFunction <: GpFunction1p end
+abstract type ExpFunction <: GpFunction1p end
 
 abstract type PlusFunction <: GpFunction2p end
 abstract type MinusFunction <: GpFunction2p end

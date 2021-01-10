@@ -3,10 +3,12 @@ function createstack()
 end
 
 
-function interprete(codelist, stack)
+function interprete(codelist, stack, dict)
     for element in codelist
-        if element isa Number || element isa Symbol
+        if element isa Number 
             push!(stack, element)
+        elseif element isa Symbol
+            push!(stack, dict[element])
         elseif element <: GpFunction
             eval!(element, stack)
         end
@@ -48,3 +50,9 @@ function eval!(::Type{NegateFunction}, stack)
     p = pop!(stack)
     push!(stack, -p)
 end
+
+function eval!(::Type{ExpFunction}, stack)
+    p = pop!(stack)
+    push!(stack, exp(p))
+end
+
