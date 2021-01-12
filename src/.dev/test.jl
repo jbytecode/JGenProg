@@ -153,3 +153,9 @@ end
     value = pop!(stack)
     @test value == 0
 end
+
+
+@testset "Get Args Count" begin
+    @test getArgsCount(NegateFunction) == 1
+    @test getArgsCount(OrFunction) == 2
+end
