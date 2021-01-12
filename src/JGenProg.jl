@@ -4,7 +4,7 @@ using DataStructures
 
 include("types.jl")
 include("interpreter.jl")
-
+include("random.jl")
 
 
 
