@@ -1,4 +1,5 @@
 using Test
+using Random
 
 include("playground.jl")
 
@@ -181,6 +182,45 @@ end
     value = pop!(stack)
     @test value == 0
 end
+
+
+@testset "Create Random Binary Expression" begin
+    exprlist = [AndFunction, OrFunction, NotFunction, XorFunction]
+    numpool = [0, 1]
+    varpool = Dict(:x => 1, :y => 1)
+    for i in 1:1000
+        e = randomExpression(exprlist, numpool, varpool, maxdepth=1000)
+        stack = createstack()
+        interprete(e, stack, varpool)
+        
+        # Stack must include a single result
+        @test length(stack) == 1
+    
+        # Binary operators should produce binary output
+        value = pop!(stack)
+        @test value in [true, false]
+    end
+end
+
+
+@testset "Create Random Arithmetic Expression" begin
+    exprlist = [PlusFunction, MinusFunction, ProductFunction, DivideFunction]
+    numpool = collect(1:20)
+    varpool = Dict(:x => 1, :y => 2)
+    for i in 1:1000
+        e = randomExpression(exprlist, numpool, varpool, maxdepth=1000)
+        stack = createstack()
+        interprete(e, stack, varpool)
+
+        # Stack mut include a single result
+        @test length(stack) == 1    
+
+        #  Arithmetic operators should produce a number
+        value = pop!(stack)
+        @test isa(value, Number)
+    end
+end
+
 
 
 @testset "Get Args Count" begin
