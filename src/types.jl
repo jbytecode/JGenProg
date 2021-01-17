@@ -18,6 +18,8 @@ abstract type DivideFunction <: GpFunction2p end
 abstract type PowerFunction <: GpFunction2p end
 abstract type AndFunction <: GpFunction2p end
 abstract type OrFunction <: GpFunction2p end
+abstract type XorFunction <: GpFunction2p end
+
 
 # Get number of arguments
 getArgsCount(::Type{T} where T <: GpFunction1p) = 1

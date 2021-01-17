@@ -1,4 +1,4 @@
-function randomExpression(exprpool::Array, numpool::Array, varpool::Dict)
+function randomExpression(exprpool::Array, numpool::Array, varpool::Dict; depth::Int=1, maxdepth=3)
     #  select the lucky operation
     luckyExpr = rand(exprpool, 1)[1]
     
@@ -9,12 +9,22 @@ function randomExpression(exprpool::Array, numpool::Array, varpool::Dict)
     postfixarr = []
 
     for i in 1:argsc
-        if rand() < 0.5
+        myrand = rand()
+        if myrand < 0.35
             push!(postfixarr, rand(numpool, 1)[1])
-        else
+        elseif myrand < 0.70
             randomPairValue = rand(varpool, 1)[1]
             key, val = randomPairValue
             push!(postfixarr, key)
+        else 
+            if depth <= maxdepth
+                randexp = randomExpression(exprpool, numpool, varpool, depth=depth + 1, maxdepth=maxdepth)
+                for element in randexp
+                    push!(postfixarr, element)
+                end
+            else
+                push!(postfixarr, rand(numpool, 1)[1])
+            end
         end
     end
 

@@ -135,6 +135,34 @@ end
     @test value == 1
 end
 
+
+@testset "Xor function" begin
+    codelist = [1, 0, XorFunction]
+    stack = createstack()
+    dict = Dict()
+    interprete(codelist, stack, dict)
+    value = pop!(stack)
+    @test value == 1
+
+    codelist = [0, 1, XorFunction]
+    stack = createstack()
+    dict = Dict()
+    interprete(codelist, stack, dict)
+    value = pop!(stack)
+    @test value == 1
+
+    codelist = [0, 0, XorFunction]
+    interprete(codelist, stack, dict)
+    value = pop!(stack)
+    @test value == 0
+
+    codelist = [1, 1, XorFunction]
+    interprete(codelist, stack, dict)
+    value = pop!(stack)
+    @test value == 0
+end
+
+
 @testset "Not function" begin
     codelist = [1, NotFunction]
     stack = createstack()

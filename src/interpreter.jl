@@ -67,6 +67,13 @@ function eval!(::Type{OrFunction}, stack)
     push!(stack, p2 || p1)
 end
 
+function eval!(::Type{XorFunction}, stack)
+    p1::Bool = !iszero(pop!(stack)) 
+    p2::Bool = !iszero(pop!(stack))
+    push!(stack, xor(p1, p2))
+end
+
+
 function eval!(::Type{NotFunction}, stack)
     p::Bool = !iszero(pop!(stack))
     push!(stack, !p)
