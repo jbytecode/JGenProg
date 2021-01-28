@@ -1,27 +1,48 @@
-abstract type GpFunction end
+struct GpOperator
+    sym::Symbol
+    argc::Int64
+    f::Function
+end
 
-abstract type GpFunction1p <: GpFunction end
-abstract type GpFunction2p <: GpFunction end
-abstract type GpFunction3p <: GpFunction end
-abstract type GpFunction4p <: GpFunction end
+struct GpSetting
+    operatorpool::Array{GpOperator,1}
+    numpool::Array{Union{Number,Symbol},1}
+end
 
-#  Unary functions
-abstract type NegateFunction <: GpFunction1p end
-abstract type ExpFunction <: GpFunction1p end
-abstract type NotFunction <: GpFunction1p end
+const gpOperators = [ 
+   GpOperator(:+, 2, +),
+   GpOperator(:-, 2, -),
+   GpOperator(:*, 2, *),
+   GpOperator(:/, 2, /),
+   GpOperator(:negate, 1, negate)
+]
 
-# Binary Functions
-abstract type PlusFunction <: GpFunction2p end
-abstract type MinusFunction <: GpFunction2p end
-abstract type ProductFunction <: GpFunction2p end
-abstract type DivideFunction <: GpFunction2p end
-abstract type PowerFunction <: GpFunction2p end
-abstract type AndFunction <: GpFunction2p end
-abstract type OrFunction <: GpFunction2p end
-abstract type XorFunction <: GpFunction2p end
+function findGpOperator(s::Symbol)::GpOperator
+    for op in gpOperators
+        if op.sym == s 
+            return op
+        end
+    end
+    throw("Operator not found for symbol $s.")
+end 
+
+function findGpOperator(f::Function)::GpOperator
+    for op in gpOperators
+        if op.f == f 
+            return op
+        end
+    end
+    throw("Operator not found for function $f.")
+end
 
 
-# Get number of arguments
-getArgsCount(::Type{T} where T <: GpFunction1p) = 1
-getArgsCount(::Type{T} where T <: GpFunction2p) = 2
+getGpArgsCount(op::GpOperator) = op.argc
+getGpArgsCount(sym::Symbol) = findGpOperator(sym).argc
+
+getGpFunction(op::GpOperator) = op.f
+getGpFunction(sym::Symbol) = findGpOperator(sym).f
+
+getGpSymbol(op::GpOperator) = op.sym
+
+
 
