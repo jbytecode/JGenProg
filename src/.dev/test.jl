@@ -8,16 +8,16 @@ include("playground.jl")
     argc = getGpArgsCount(op)
     @test argc == 2
 
-    op = findGpOperator(:negate)
+    op = findGpOperator(:GpNeg)
     argc = getGpArgsCount(op)
     @test argc == 1
 
-    op = findGpOperator(negate)
+    op = findGpOperator(GpNeg)
     @test op.f(-5) == 5
 end
 
 @testset "Get Gp Function" begin
-    f = getGpFunction(:negate)
+    f = getGpFunction(:GpNeg)
     result = f(10)
     @test result == -10
 
@@ -27,17 +27,24 @@ end
     @test result == 25
 end
 
-@testset "Random plus operator" begin
+@testset "Random expression of deep 1" begin
     pool = [1 ,2, 3, :x, :y]
-    setting = GpSetting(gpOperators, pool)
-    expr::Expr = randomPlus(setting, maxdepth=2)
+    myGpOperators = [
+        GpOperator(:+, 2, +)
+    ]
+    setting = GpSetting(myGpOperators, pool)
+    expr::Expr = randomExpr(setting, maxdepth=2)
+
     @test expr.head == :call
     @test expr.args[1] == :+
     @test expr.args[2] in pool
     @test expr.args[3] in pool
 
-    x = 5
-    y = 6
-    @test isa(eval(expr), Number)
+    result = @eval function ()
+        x = 5
+        y = 7
+        $expr
+    end
+    @test isa(result(), Number)
 end
 

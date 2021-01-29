@@ -14,7 +14,13 @@ const gpOperators = [
    GpOperator(:-, 2, -),
    GpOperator(:*, 2, *),
    GpOperator(:/, 2, /),
-   GpOperator(:negate, 1, negate)
+   GpOperator(:GpPow, 2, GpPow),
+   GpOperator(:GpSqrt, 1, GpSqrt),
+   GpOperator(:GpLn, 1, GpLn),
+   GpOperator(:GpNeg, 1, GpNeg),
+   GpOperator(:GpOr, 2, GpOr),
+   GpOperator(:GpAnd, 2, GpAnd),
+   GpOperator(:GpIf, 3, GpIf)
 ]
 
 function findGpOperator(s::Symbol)::GpOperator
