@@ -20,6 +20,7 @@ const gpOperators = [
    GpOperator(:GpNeg, 1, GpNeg),
    GpOperator(:GpOr, 2, GpOr),
    GpOperator(:GpAnd, 2, GpAnd),
+   GpOperator(:GpEq, 2, GpEq),
    GpOperator(:GpIf, 3, GpIf)
 ]
 
@@ -51,4 +52,17 @@ getGpFunction(sym::Symbol) = findGpOperator(sym).f
 getGpSymbol(op::GpOperator) = op.sym
 
 
+
+Base.length(e::Expr) = length(e.args)
+Base.length(::Symbol) = 1
+
+
+function depth(e::Expr; current=1)::Int64 
+    exprs = filter(x -> typeof(x) == Expr, e.args)
+    t = current
+    for element in exprs
+        t = depth(element, current=current + 1)
+    end
+    return t
+end
 

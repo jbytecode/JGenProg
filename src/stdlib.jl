@@ -14,6 +14,10 @@ function GpAnd(x, y)::Bool
     return p1 && p2
 end
 
+function GpEq(x, y)::Bool
+    return x == y
+end
+
 function GpIf(cond, ifT, ifF)
     pcond = cond
     if !(pcond isa Bool)
